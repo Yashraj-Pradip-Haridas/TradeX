@@ -20,3 +20,7 @@ code {
   text-decoration: none;
   color: black;
 }
+
+.linksUndecorated {
+  text-decoration: none;
+}
