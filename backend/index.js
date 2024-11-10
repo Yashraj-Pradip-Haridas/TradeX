@@ -3,11 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-
-const PORT = process.env.PORT || 3000;
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const PORT = process.env.PORT || 3002;
 const url = process.env.MONGO_URL;
-// const { HoldingsModel } = require("./models/HoldingsModel");
-// const { PositionsModel } = require("./models/PositionsModel");
+const { HoldingsModel } = require("./models/HoldingsModel");
+const { PositionsModel } = require("./models/PositionsModel");
 // Instead of using the below u also can use the following code only
 // mongoose.connect(url)  This much is also enough
 mongoose.connect(url).then(() => {
@@ -52,7 +53,17 @@ mongoose.connect(url).then(() => {
 //   });
 //   res.send("Done");
 // });
+app.use(cors());
+app.use(bodyParser.json());
+app.get("/allHoldings", async (req, res) => {
+  let allHoldings = await HoldingsModel.find({});
+  res.json(allHoldings);
+});
+app.get("/allPositions", async (req, res) => {
+  let allPositions = await PositionsModel.find({});
+  res.json(allPositions);
+});
 
 app.listen(PORT, () => {
-  console.log("Server is running at port 3000");
+  console.log("Server is running at port 3002");
 });

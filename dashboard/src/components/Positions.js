@@ -1,9 +1,17 @@
-import React from "react";
-import { positions } from "../data/data";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+// import { positions } from "../data/data";
 const Positions = () => {
+  const [positions, setAllPositions] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:3002/allPositions").then((res) => {
+      setAllPositions(res.data);
+      // console.log(res.data);
+    });
+  });
   return (
     <>
-      <h3 className="title">Positions (2)</h3>
+      <h3 className="title">Positions({positions.length})</h3>
 
       <div className="order-table">
         <table>
